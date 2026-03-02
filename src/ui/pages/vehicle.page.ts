@@ -38,12 +38,12 @@ export class VehiclePage {
     }
 
     //   COMMON DROPDOWNS  
-    await this.selectDropdownByLabel('Year', '2025')
+    await this.selectDropdownByLabel('Year', '2023')
     await this.selectDropdownByLabel('Make', type === 'auto' ? 'Audi' : 'Keystone')
-    await this.selectDropdownByLabel('Model', type === 'auto' ? 'A4' : 'Cougar')
+    await this.selectDropdownByLabel('Model', type === 'auto' ? 'A3' : 'Cougar')
 
     //   INPUT  
-    await this.locators.mileageInput().fill('15001')
+    await this.locators.mileageInput().fill('1500')
     await this.locators.vinInput().focus()
 
     //   AUTO ONLY  

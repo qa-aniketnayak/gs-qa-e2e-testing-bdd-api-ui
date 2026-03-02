@@ -62,11 +62,11 @@ export class CheckoutPage {
 
   //ACTIONS
   async fillPersonalInformation() {
-    await this.locators.firstNameInput().fill('Aniket ')
-    await this.locators.lastNameInput().fill('Nayak ')
-    await this.locators.emailInput().fill('aniket.nayak569@gmail.com')
+    await this.locators.firstNameInput().fill('Aniketa')
+    await this.locators.lastNameInput().fill('Nayakr')
+    await this.locators.emailInput().fill('aniket.nayak56234@gmail.com')
     await this.locators.addressInput().fill('640 Three Springs Rd')
-    await this.locators.phoneNumberInput().fill('65434767676')
+    await this.locators.phoneNumberInput().fill('65433367667')
     await this.locators.zipCodeInput().fill('42104')
 
     await this.locators.yesRadioButton().click()
