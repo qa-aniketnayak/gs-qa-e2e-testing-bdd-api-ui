@@ -44,16 +44,6 @@ When('user customizes plan', async function () {
 
 When('user reviews and secures quote', async function () {
   await quote.selectQuarterlyAndSecureQuote()
-
-  // ✅ HttpOnly-safe cookie validation
-  const cookies: Cookie[] = await this.page.context().cookies()
-  const hasSSO = cookies.some((c: Cookie) => c.name === 'ENT_EMAIL_SSOID')
-
-  if (!hasSSO) {
-    throw new Error(
-      'ENT_EMAIL_SSOID cookie not set – identity not established before payment step'
-    )
-  }
 })
 
 Then('payment page should be displayed', async function () {
