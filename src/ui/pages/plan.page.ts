@@ -8,7 +8,7 @@ export default class PlanPage {
   constructor(private page: Page) {
     this.locators = new PlanLocators(this.page)
 
-    // ✅ Attach API logger once for this page
+    // Attach API logger once for this page
     attachNetworkLogger(this.page, 'PlanPage')
   }
 
@@ -19,7 +19,7 @@ export default class PlanPage {
 
     await this.page.waitForTimeout(500)
 
-    // ✅ Correct sync: commit plan + wait for Quote page
+    // Correct sync: commit plan + wait for Quote page
     await Promise.all([
       this.locators.stepFourIndicator().waitFor({ timeout: 30000 }),
       choosePlanBtn.click()

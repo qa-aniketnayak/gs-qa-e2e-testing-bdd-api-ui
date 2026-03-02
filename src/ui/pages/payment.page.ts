@@ -28,7 +28,7 @@ export default class PaymentPage extends BasePage {
     const frame = await iframeLocator.elementHandle().then(h => h?.contentFrame())
     if (!frame) throw new Error('Payment iframe not loaded')
 
-    // ================= CARD NUMBER =================
+    //  CARD NUMBER 
     const cardInput = this.locators.cardNumberInput(frame)
     await expect(cardInput).toBeVisible({ timeout: 45000 })
     await cardInput.click()
@@ -43,27 +43,27 @@ export default class PaymentPage extends BasePage {
     await cardInput.press('Tab')
     await this.page.waitForTimeout(2000)
 
-    // ================= EXPIRY =================
+    //  EXPIRY 
     const expiry = this.locators.expiryInput(frame)
     await expect(expiry).toBeVisible()
     await expiry.fill('1127')
     await expiry.press('Tab')
     await this.page.waitForTimeout(2000)
 
-    // ================= NICK NAME =================
+    //  NICK NAME 
     const nickname = this.locators.nicknameInput(frame)
     await expect(nickname).toBeVisible()
     await nickname.click()
     await nickname.fill('Test Visa')
     await this.page.waitForTimeout(2000)
 
-    // 🔥 IMPORTANT: focus must be inside iframe
+    // IMPORTANT: focus must be inside iframe
     await nickname.focus()
 
     // Capture iframe src BEFORE submit
     const previousSrc = await iframeLocator.getAttribute('src')
 
-    // ================= REAL KEYBOARD NAVIGATION =================
+    //  REAL KEYBOARD NAVIGATION 
     for (let i = 0; i < 5; i++) {
       await this.page.keyboard.press('Tab')
       await this.page.waitForTimeout(300)
@@ -71,7 +71,7 @@ export default class PaymentPage extends BasePage {
 
     await this.page.keyboard.press('Enter')
 
-    // ================= WAIT FOR IFRAME REFRESH =================
+    //  WAIT FOR IFRAME REFRESH 
     await expect
       .poll(async () => iframeLocator.getAttribute('src'), {
         timeout: 60000,
