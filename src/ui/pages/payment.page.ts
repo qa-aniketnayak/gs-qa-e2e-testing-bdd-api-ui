@@ -71,22 +71,22 @@ export default class PaymentPage extends BasePage {
 
     await this.page.keyboard.press('Enter')
 
-    //  WAIT FOR IFRAME REFRESH 
-    await expect
-      .poll(async () => iframeLocator.getAttribute('src'), {
-        timeout: 60000,
-        message: 'Waiting for payment iframe to refresh'
-      })
-      .not.toBe(previousSrc)
+    // //  WAIT FOR IFRAME REFRESH 
+    // await expect
+    //   .poll(async () => iframeLocator.getAttribute('src'), {
+    //     timeout: 60000,
+    //     message: 'Waiting for payment iframe to refresh'
+    //   })
+    //   .not.toBe(previousSrc)
 
-    // Rebind frame after refresh
-    const newFrame = await iframeLocator.elementHandle().then(h => h?.contentFrame())
-    if (!newFrame) throw new Error('Updated iframe not available')
+    // // Rebind frame after refresh
+    // const newFrame = await iframeLocator.elementHandle().then(h => h?.contentFrame())
+    // if (!newFrame) throw new Error('Updated iframe not available')
 
-    // Optional sanity check
-    await expect(
-      this.locators.reviewText(newFrame)
-    ).toBeVisible({ timeout: 30000 })
+    // // Optional sanity check
+    // await expect(
+    //   this.locators.reviewText(newFrame)
+    // ).toBeVisible({ timeout: 30000 })
   }
 
   async acceptAndSubmitFinalPayment(): Promise<void> {

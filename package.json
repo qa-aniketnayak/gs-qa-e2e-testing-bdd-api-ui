@@ -4,7 +4,7 @@
   "private": true,
   "description": "Playwright + Cucumber BDD framework for API and UI automation",
   "scripts": {
-    "cucumber:run": "cucumber-js --require-module ts-node/register --require src/hooks/**/*.ts --require src/step-definitions/**/*.ts --format json:reports/cucumber-report.json",
+    "cucumber:run": "cucumber-js --require-module ts-node/register --require src/hooks/**/*.ts --require src/step-definitions/**/*.ts --format progress --format json:reports/cucumber-report.json --format html:reports/cucumber-report.html",
     "test:api": "npm run cucumber:run -- --tags @api",
     "posttest:api": "node src/reports/generateHtmlReport.js",
 
