@@ -8,14 +8,12 @@ export default class QuotePage {
   constructor(private page: Page) {
     this.locators = new QuoteLocators(this.page)
 
-    // ✅ Attach API logger once for this page
+    // Attach API logger once for this page
     attachNetworkLogger(this.page, 'QuotePage')
   }
 
   // Temporary backend race-condition guard
   private async waitForBackendStabilization() {
-    // Payment page auto-triggers update-payment-plan on mount
-    // Backend is not ready immediately in automation
     await this.page.waitForTimeout(1500)
   }
 
@@ -33,7 +31,7 @@ export default class QuotePage {
     // UI settle (pricing recalculation)
     await this.page.waitForTimeout(500)
 
-    // ===== TERM SELECTION (UI-DRIVEN) =====
+    //  TERM SELECTION (UI-DRIVEN) 
     const termDropdown = this.locators.termDropdown()
     await expect(termDropdown).toBeVisible()
     await termDropdown.click()
@@ -49,7 +47,7 @@ export default class QuotePage {
 
     await this.page.keyboard.press('Escape')
 
-    // ===== SECURE COVERAGE =====
+    //  SECURE COVERAGE 
     const secureCoverageBtn = this.locators.secureCoverageButton()
     await expect(secureCoverageBtn).toBeEnabled({ timeout: 30000 })
 

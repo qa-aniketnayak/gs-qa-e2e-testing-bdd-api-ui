@@ -8,7 +8,7 @@ export class VehiclePage {
   constructor(private page: Page) {
     this.locators = new VehicleLocators(this.page)
 
-    // ✅ Attach API logger once for this page
+    // Attach API logger once for this page
     attachNetworkLogger(this.page, 'VehiclePage')
   }
 
@@ -29,7 +29,7 @@ export class VehiclePage {
   async fillVehicleInformation(vehicleType: string) {
     const type = vehicleType.toLowerCase()
 
-    // ===== VEHICLE TYPE =====
+    //   VEHICLE TYPE  
     if (type === 'auto') {
       await this.locators.autoTab().click()
     } else {
@@ -37,25 +37,25 @@ export class VehiclePage {
       await this.selectDropdownByLabel('RV Type', 'Travel Trailer')
     }
 
-    // ===== COMMON DROPDOWNS =====
+    //   COMMON DROPDOWNS  
     await this.selectDropdownByLabel('Year', '2025')
     await this.selectDropdownByLabel('Make', type === 'auto' ? 'Audi' : 'Keystone')
     await this.selectDropdownByLabel('Model', type === 'auto' ? 'A4' : 'Cougar')
 
-    // ===== INPUT =====
+    //   INPUT  
     await this.locators.mileageInput().fill('15001')
     await this.locators.vinInput().focus()
 
-    // ===== AUTO ONLY =====
+    //   AUTO ONLY  
     if (type === 'auto') {
       await this.clickRadixRadio(this.locators.automaticTransmission())
       await this.clickRadixRadio(this.locators.gasolineFuel())
     }
 
-    // ===== OWNERSHIP =====
+    //  OWNERSHIP 
     await this.clickRadixRadio(this.locators.potentialPurchase())
 
-    // ===== SUBMIT =====
+    //  SUBMIT 
     await Promise.all([
       this.page.waitForURL(/\/checkout\/plan/, { timeout: 30000 }),
       this.locators.addVehicleButton().click()

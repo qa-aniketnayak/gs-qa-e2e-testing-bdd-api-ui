@@ -8,17 +8,17 @@ export class CheckoutPage {
   constructor(private page: Page) {
     this.locators = new CheckoutLocators(this.page)
 
-    // ✅ Attach API logger once for this page
+    // Attach API logger once for this page
     attachNetworkLogger(this.page, 'CheckoutPage')
   }
 
-  // ================= NAVIGATION =================
+  //  NAVIGATION
 
   async navigate(baseUrl: string) {
     await this.page.goto(`${baseUrl}/checkout`)
   }
 
-  // ================= UI ASSERTIONS (PRE-SUBMIT) =================
+  //  UI ASSERTIONS (PRE-SUBMIT) 
 
   async verifyCheckoutPageUI() {
     await expect(this.page).toHaveTitle('Checkout | Good Sam')
@@ -60,8 +60,7 @@ export class CheckoutPage {
     ).toBeVisible()
   }
 
-  // ================= ACTIONS =================
-
+  //ACTIONS
   async fillPersonalInformation() {
     await this.locators.firstNameInput().fill('Aniket ')
     await this.locators.lastNameInput().fill('Nayak ')
@@ -73,7 +72,7 @@ export class CheckoutPage {
     await this.locators.yesRadioButton().click()
     await this.locators.termsCheckbox().check()
 
-    // ✅ Correct sync: wait for Vehicle page
+    // Correct sync: wait for Vehicle page
     await Promise.all([
       this.page.waitForURL(/\/checkout\/vehicle/, { timeout: 30000 }),
       this.locators.startMyQuoteButton().click()
