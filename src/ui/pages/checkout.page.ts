@@ -18,7 +18,7 @@ export class CheckoutPage {
     await this.page.goto(`${baseUrl}/checkout`)
   }
 
-  //  UI ASSERTIONS (PRE-SUBMIT) 
+  //  UI ASSERTIONS (PRE-SUBMIT)
 
   async verifyCheckoutPageUI() {
     await expect(this.page).toHaveTitle('Checkout | Good Sam')
@@ -60,19 +60,45 @@ export class CheckoutPage {
     ).toBeVisible()
   }
 
-  //ACTIONS
+  // ---------------- RANDOM DATA HELPERS ----------------
+
+  private generateRandomString(length: number): string {
+    const chars = 'abcdefghijklmnopqrstuvwxyz'
+    return Array.from({ length }, () =>
+      chars.charAt(Math.floor(Math.random() * chars.length))
+    ).join('')
+  }
+
+  private generateRandomEmail(): string {
+    const randomPart = this.generateRandomString(6)
+    return `test.${randomPart}@example.com`
+  }
+
+  private generateRandomPhoneNumber(): string {
+    const randomDigits = Math.floor(
+      1000000000 + Math.random() * 9000000000
+    ).toString()
+    return `+1${randomDigits}`
+  }
+
+  // ---------------- ACTIONS ----------------
+
   async fillPersonalInformation() {
-    await this.locators.firstNameInput().fill('Aniketa')
-    await this.locators.lastNameInput().fill('Nayakr')
-    await this.locators.emailInput().fill('aniket.nayak56234@gmail.com')
+    const firstName = this.generateRandomString(6)
+    const lastName = this.generateRandomString(6)
+    const email = this.generateRandomEmail()
+    const phone = this.generateRandomPhoneNumber()
+
+    await this.locators.firstNameInput().fill(firstName)
+    await this.locators.lastNameInput().fill(lastName)
+    await this.locators.emailInput().fill(email)
     await this.locators.addressInput().fill('640 Three Springs Rd')
-    await this.locators.phoneNumberInput().fill('65433367667')
+    await this.locators.phoneNumberInput().fill(phone)
     await this.locators.zipCodeInput().fill('42104')
 
     await this.locators.yesRadioButton().click()
     await this.locators.termsCheckbox().check()
 
-    // Correct sync: wait for Vehicle page
     await Promise.all([
       this.page.waitForURL(/\/checkout\/vehicle/, { timeout: 30000 }),
       this.locators.startMyQuoteButton().click()
