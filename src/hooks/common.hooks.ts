@@ -24,11 +24,15 @@ setDefaultTimeout(60 * 1000)
  */
 Before({ tags: '@ui' }, async function () {
   this.browser = await chromium.launch({
-    headless: false , slowMo:200
+    headless: false,
+    slowMo: 200,
+    args: ['--start-maximized']
   })
 
   // ⭐ Solution 4: Disable automation detection
-  this.context = await this.browser.newContext()
+  this.context = await this.browser.newContext({
+    viewport: null
+  })
 
   await this.context.addInitScript(() => {
     Object.defineProperty(navigator, 'webdriver', {
@@ -77,3 +81,4 @@ After({ tags: '@ui' }, async function () {
   await this.context?.close()
   await this.browser?.close()
 })
+
