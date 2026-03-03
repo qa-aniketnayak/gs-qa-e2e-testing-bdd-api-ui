@@ -15,4 +15,4 @@ Feature: ESP Checkout E2E
     Examples:
       | VehicleType |
       | Auto        |
-      # | RV          |
+      | RV          |

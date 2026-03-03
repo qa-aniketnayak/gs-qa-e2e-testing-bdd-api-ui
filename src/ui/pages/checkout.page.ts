@@ -1,6 +1,7 @@
 import { Page, expect } from '@playwright/test'
 import { CheckoutLocators } from '../locators/checkout.locators'
 import { attachNetworkLogger } from '../../utils/networkLogger'
+import { getCheckoutE2EDataWithRandomUser } from '../../../fixtures/ui/checkout.e2e.data'
 
 export class CheckoutPage {
   private locators: CheckoutLocators
@@ -60,41 +61,17 @@ export class CheckoutPage {
     ).toBeVisible()
   }
 
-  // ---------------- RANDOM DATA HELPERS ----------------
-
-  private generateRandomString(length: number): string {
-    const chars = 'abcdefghijklmnopqrstuvwxyz'
-    return Array.from({ length }, () =>
-      chars.charAt(Math.floor(Math.random() * chars.length))
-    ).join('')
-  }
-
-  private generateRandomEmail(): string {
-    const randomPart = this.generateRandomString(6)
-    return `test.${randomPart}@example.com`
-  }
-
-  private generateRandomPhoneNumber(): string {
-    const randomDigits = Math.floor(
-      1000000000 + Math.random() * 9000000000
-    ).toString()
-    return `+1${randomDigits}`
-  }
-
   // ---------------- ACTIONS ----------------
 
   async fillPersonalInformation() {
-    const firstName = this.generateRandomString(6)
-    const lastName = this.generateRandomString(6)
-    const email = this.generateRandomEmail()
-    const phone = this.generateRandomPhoneNumber()
+    const { personal } = getCheckoutE2EDataWithRandomUser()
 
-    await this.locators.firstNameInput().fill(firstName)
-    await this.locators.lastNameInput().fill(lastName)
-    await this.locators.emailInput().fill(email)
-    await this.locators.addressInput().fill('640 Three Springs Rd')
-    await this.locators.phoneNumberInput().fill(phone)
-    await this.locators.zipCodeInput().fill('42104')
+    await this.locators.firstNameInput().fill(personal.firstName)
+    await this.locators.lastNameInput().fill(personal.lastName)
+    await this.locators.emailInput().fill(personal.email)
+    await this.locators.addressInput().fill(personal.address)
+    await this.locators.phoneNumberInput().fill(personal.phone)
+    await this.locators.zipCodeInput().fill(personal.zip)
 
     await this.locators.yesRadioButton().click()
     await this.locators.termsCheckbox().check()
