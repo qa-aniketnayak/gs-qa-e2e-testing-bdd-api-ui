@@ -1,5 +1,4 @@
 import { Given, When, Then } from '@cucumber/cucumber'
-import type { Cookie } from '@playwright/test'
 import { CheckoutPage } from '../../ui/pages/checkout.page'
 import { VehiclePage } from '../../ui/pages/vehicle.page'
 import PlanPage from '../../ui/pages/plan.page'
