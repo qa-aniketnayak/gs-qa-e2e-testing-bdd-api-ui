@@ -134,4 +134,48 @@ export class CheckoutPage {
     await expect(this.locators.retrieveQuoteButton()).toBeVisible()
     await expect(this.locators.retrieveQuoteButton()).toBeEnabled()
   }
+  async submitEmptyForm() {
+  await this.locators.startMyQuoteButton().click()
+}
+
+async verifyAllRequiredFieldErrors() {
+  await expect(this.locators.validationError('First name is required')).toBeVisible()
+  await expect(this.locators.validationError('Last name is required')).toBeVisible()
+  await expect(this.locators.validationError('Email is required')).toBeVisible()
+  await expect(this.locators.validationError('Home street address is required')).toBeVisible()
+  await expect(this.locators.validationError('Phone number is required')).toBeVisible()
+  await expect(this.locators.validationError('ZIP Code is required')).toBeVisible()
+}
+
+async fillPersonalInfoExcept(field: string) {
+  const { personal } = getCheckoutE2EDataWithRandomUser()
+
+  if (field !== 'firstName')
+    await this.locators.firstNameInput().fill(personal.firstName)
+
+  if (field !== 'lastName')
+    await this.locators.lastNameInput().fill(personal.lastName)
+
+  if (field !== 'email')
+    await this.locators.emailInput().fill(personal.email)
+
+  if (field !== 'address')
+    await this.locators.addressInput().fill(personal.address)
+
+  if (field !== 'phone')
+    await this.locators.phoneNumberInput().fill(personal.phone)
+
+  if (field !== 'zip')
+    await this.locators.zipCodeInput().fill(personal.zip)
+
+  await this.locators.yesRadioButton().click()
+}
+
+async clickStartQuote() {
+  await this.locators.startMyQuoteButton().click()
+}
+
+async verifyValidationMessage(message: string) {
+  await expect(this.locators.validationError(message)).toBeVisible()
+}
 }
