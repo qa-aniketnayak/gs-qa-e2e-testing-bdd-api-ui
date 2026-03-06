@@ -13,13 +13,9 @@ export class CheckoutPage {
     attachNetworkLogger(this.page, 'CheckoutPage')
   }
 
-  //  NAVIGATION
-
   async navigate(baseUrl: string) {
     await this.page.goto(`${baseUrl}/checkout`)
   }
-
-  //  UI ASSERTIONS (PRE-SUBMIT)
 
   async verifyCheckoutPageUI() {
     await expect(this.page).toHaveTitle('Checkout | Good Sam')
@@ -61,8 +57,6 @@ export class CheckoutPage {
     ).toBeVisible()
   }
 
-  // ---------------- ACTIONS ----------------
-
   async fillPersonalInformation() {
     const { personal } = getCheckoutE2EDataWithRandomUser()
 
@@ -80,5 +74,64 @@ export class CheckoutPage {
       this.page.waitForURL(/\/checkout\/vehicle/, { timeout: 30000 }),
       this.locators.startMyQuoteButton().click()
     ])
+  }
+
+  async fillPersonalInformationWithMember(member: string) {
+    const { personal } = getCheckoutE2EDataWithRandomUser()
+
+    await this.locators.firstNameInput().fill(personal.firstName)
+    await this.locators.lastNameInput().fill(personal.lastName)
+    await this.locators.emailInput().fill(personal.email)
+    await this.locators.addressInput().fill(personal.address)
+    await this.locators.phoneNumberInput().fill(personal.phone)
+    await this.locators.zipCodeInput().fill(personal.zip)
+
+    if (member.toLowerCase() === 'yes') {
+      await this.locators.yesRadioButton().click()
+    } else {
+      await this.locators.noRadioButton().click()
+    }
+
+    await this.locators.termsCheckbox().check()
+
+    await Promise.all([
+      this.page.waitForURL(/\/checkout\/vehicle/, { timeout: 30000 }),
+      this.locators.startMyQuoteButton().click()
+    ])
+  }
+
+  async verifyDefaultMemberSelection(member: string) {
+    if (member.toLowerCase() === 'no') {
+      await expect(this.locators.noRadioButton()).toHaveAttribute(
+        'aria-checked',
+        'true'
+      )
+    }
+  }
+
+  async clickLogo() {
+    await this.locators.logoLink().click()
+  }
+
+  async verifyHomePageNavigation() {
+    await expect(this.page).toHaveURL(/\/$/)
+  }
+
+  async verifyPhoneLink() {
+    const phoneLinks = this.page.locator('a[href^="tel:"]')
+
+    await expect(phoneLinks).toHaveCount(2)
+
+    await expect(phoneLinks.first()).toHaveAttribute('href', /tel:/)
+  }
+
+  async clickRetrieveQuote() {
+    await expect(this.locators.retrieveQuoteButton()).toBeVisible()
+    await this.locators.retrieveQuoteButton().click()
+  }
+
+  async verifyRetrieveQuoteButtonVisible() {
+    await expect(this.locators.retrieveQuoteButton()).toBeVisible()
+    await expect(this.locators.retrieveQuoteButton()).toBeEnabled()
   }
 }

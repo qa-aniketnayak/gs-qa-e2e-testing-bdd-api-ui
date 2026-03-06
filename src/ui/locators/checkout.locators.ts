@@ -14,7 +14,7 @@ export class CheckoutLocators {
     this.page.getByRole('textbox', { name: 'Email' })
 
   addressInput = () =>
-     this.page.getByRole('textbox', {
+    this.page.getByRole('textbox', {
       name: /shipping address|street address|home street address|address/i
     })
 
@@ -24,14 +24,28 @@ export class CheckoutLocators {
   zipCodeInput = () =>
     this.page.getByRole('textbox', { name: 'ZIP Code' })
 
-  // Radio & checkbox
+  // Radio buttons
   yesRadioButton = () =>
     this.page.getByRole('radio', { name: 'Yes' })
 
+  noRadioButton = () =>
+    this.page.getByRole('radio', { name: 'No' })
+
+  // Checkbox
   termsCheckbox = () =>
     this.page.getByRole('checkbox')
 
-  // Button
+  // Buttons
   startMyQuoteButton = () =>
     this.page.getByRole('button', { name: 'Start my quote' })
+
+  retrieveQuoteButton = () =>
+    this.page.getByRole('button', { name: 'Retrieve a quote' })
+
+  // Header elements
+  logoLink = () =>
+    this.page.locator('nav a[href="/"]')
+
+  phoneLink = () =>
+    this.page.locator('a[href^="tel:"]')
 }
