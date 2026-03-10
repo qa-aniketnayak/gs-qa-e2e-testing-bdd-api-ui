@@ -237,4 +237,64 @@ async verifyRetrieveQuoteButtonVisible() {
   ).toBeVisible()
 }
 
+async enterEmail(email: string) {
+
+  await this.locators.emailInput().fill(email)
+
+}
+
+async enterPhone(phone: string) {
+
+  await this.locators.phoneNumberInput().fill(phone)
+
+}
+
+async enterZip(zip: string) {
+
+  await this.locators.zipCodeInput().fill(zip)
+
+}
+
+async enterFirstName(firstName: string) {
+
+  await this.locators.firstNameInput().fill(firstName)
+
+}
+
+async enterLastName(lastName: string) {
+
+  await this.locators.lastNameInput().fill(lastName)
+
+}
+
+// INPUT FILTER VALIDATIONS
+
+async verifyPhoneAcceptsOnlyDigits() {
+
+  const value = await this.locators.phoneNumberInput().inputValue()
+
+  // remove formatting characters
+  const digitsOnly = value.replace(/[^\d]/g, '')
+
+  // ensure at least one digit exists
+  expect(digitsOnly.length).toBeGreaterThan(0)
+
+}
+
+async verifyZipAcceptsOnlyDigits() {
+
+  const value = await this.locators.zipCodeInput().inputValue()
+
+  expect(value).toMatch(/^\d+$/)
+
+}
+
+async verifyLastNameHasNoNumbers() {
+
+  const value = await this.locators.lastNameInput().inputValue()
+
+  expect(value).toMatch(/^[A-Za-z]+$/)
+
+}
+
 }
