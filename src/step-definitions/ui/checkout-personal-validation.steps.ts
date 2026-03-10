@@ -18,6 +18,8 @@ When('user fills personal information except {string}', async function (field: s
 
 When('user clicks Start my quote', async function () {
   const checkoutPage = new CheckoutPage(this.page)
+
+  await checkoutPage.ensureTermsChecked()
   await checkoutPage.clickStartQuote()
 })
 

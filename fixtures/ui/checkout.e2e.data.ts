@@ -68,8 +68,17 @@ export const checkoutE2EData: CheckoutE2EData = {
   }
 }
 
+  //  Utility Generators
+
 function generateRandomString(length: number): string {
   const chars = 'abcdefghijklmnopqrstuvwxyz'
+  return Array.from({ length }, () =>
+    chars.charAt(Math.floor(Math.random() * chars.length))
+  ).join('')
+}
+
+export function generateString(length: number): string {
+  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
   return Array.from({ length }, () =>
     chars.charAt(Math.floor(Math.random() * chars.length))
   ).join('')
@@ -87,6 +96,8 @@ function generateRandomPhoneNumber(): string {
   return `+1${randomDigits}`
 }
 
+  //  E2E Random User Data
+
 export function getCheckoutE2EDataWithRandomUser(): CheckoutE2EData {
   return {
     ...checkoutE2EData,
@@ -100,7 +111,48 @@ export function getCheckoutE2EDataWithRandomUser(): CheckoutE2EData {
   }
 }
 
+  //  Boundary Test Data
+
+export const boundaryTestData = {
+  firstName: {
+    min: 'A',
+    max: generateString(100),
+    exceed: generateString(101)
+  },
+
+  lastName: {
+    min: 'B',
+    max: generateString(100),
+    exceed: generateString(101)
+  },
+
+  email: {
+    min: 'a@b.co',
+    longDomain: `test.${generateString(30)}@example.${generateString(10)}.com`
+  },
+
+  address: {
+    min: '1',
+    max: generateString(200)
+  },
+
+  phone: {
+    min: '1234567890',
+    max: '123456789012345'
+  },
+
+  zip: {
+    min: '42104',
+    zipPlus4: '42104-1234'
+  }
+}
+
+
+  //  Vehicle Data Helper
+
+
 export function getVehicleDataByType(vehicleType: string): AutoVehicleData | RvVehicleData {
+
   const type = vehicleType.trim().toLowerCase()
 
   if (type === 'auto' || type === 'autos') {
