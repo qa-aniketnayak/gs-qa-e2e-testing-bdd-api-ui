@@ -4,28 +4,18 @@
   "private": true,
   "description": "Playwright + Cucumber BDD framework for API and UI automation",
   "scripts": {
-    "cucumber:run": "cucumber-js --require-module ts-node/register --require src/hooks/**/*.ts --require src/step-definitions/**/*.ts --format progress --format json:reports/cucumber-report.json --format html:reports/cucumber-report.html",
+    "cucumber:run": "node scripts/run-cucumber-with-report.js",
     "test:api": "npm run cucumber:run -- --tags @api",
-    "posttest:api": "node src/reports/generateHtmlReport.js",
-
     "test:address": "npm run cucumber:run -- --tags @address",
-    "posttest:address": "node src/reports/generateHtmlReport.js",
-
     "test:latest": "npm run cucumber:run -- --tags @latest",
-    "posttest:latest": "node src/reports/generateHtmlReport.js",
-
     "test:ui": "npm run cucumber:run -- --tags @ui",
-    "posttest:ui": "node src/reports/generateHtmlReport.js",
-
     "test:smoke": "npm run cucumber:run -- --tags @smoke",
-    "posttest:smoke": "node src/reports/generateHtmlReport.js",
-
     "test:regression": "npm run cucumber:run -- --tags @regression",
-    "posttest:regression": "node src/reports/generateHtmlReport.js"
+    "report:html": "node scripts/generate-html-report.js"
   },
   "devDependencies": {
-    "@cucumber/cucumber": "^9.2.0",
-    "@playwright/test": "^1.41.0",
+    "@cucumber/cucumber": "^12.7.0",
+    "@playwright/test": "^1.58.2",
     "typescript": "^5.3.3",
     "ts-node": "^10.9.2",
     "cucumber-html-reporter": "^5.5.0"

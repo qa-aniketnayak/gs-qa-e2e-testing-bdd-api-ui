@@ -20,7 +20,7 @@ Playwright + Cucumber (BDD) + TypeScript framework for **API** and **UI** end‑
   - `ui/locators/` – Playwright locators per page
   - `ui/pages/` – Page Object Model classes
   - `api/` – API client, services, validators
-  - `reports/` – HTML report generator
+  - `scripts/` – Cucumber runner + HTML report generator
   - `utils/` – CSV writer and helpers
 - `fixtures/` – test data (e.g. checkout UI data)
 - `reports/` – cucumber JSON + HTML reports (output)
@@ -99,7 +99,7 @@ Each `test:*` script:
 
 1. Runs Cucumber with the appropriate tag(s)
 2. Generates `reports/cucumber-report.json`
-3. Triggers `src/reports/generateHtmlReport.js` to build `reports/cucumber-report.html`
+3. Triggers `scripts/generate-html-report.js` to build `reports/cucumber-report.html`
 
 ### Running UI automation locally
 
